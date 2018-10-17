@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/vitorleonel/reactpeople-api/issues"
   },
-  "homepage": "https://github.com/vitorleonel/reactpeople-api#readme"
+  "homepage": "https://github.com/vitorleonel/reactpeople-api#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.4"
+  }
 }
