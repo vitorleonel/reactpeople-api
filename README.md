@@ -1,1 +1,1 @@
-# reactpeople-api
+# React People | API
