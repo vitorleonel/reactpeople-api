@@ -5,8 +5,8 @@ const controllers =  require('../controllers');
 
 routes.post('/auth', controllers.authController.auth);
 
-routes.get('/', (req, res, next) => {
-  res.json({ message: 'API in operation.' });
+routes.use((req, res) => {
+  res.json({ message: 'API in operation.', });
 });
 
 module.exports = routes;
