@@ -6,6 +6,9 @@ const username = process.env.DB_USERNAME;
 const password = process.env.DB_PASSWORD;
 
 module.exports = {
-  url: `mongodb://${username}:${password}@${host}/${database}`,
+  url: username
+    ? `mongodb://${username}:${password}@${host}/${database}`
+    : `mongodb://${host}/${database}`,
+
   modelsPath: path.resolve('app', 'models'),
 }
