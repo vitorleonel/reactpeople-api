@@ -1,5 +1,5 @@
 module.exports = {
   name: process.env.APP_NAME || 'React People',
-  key: process.env.APP_KEY,
+  secret: process.env.APP_SECRET,
   port: process.env.APP_PORT || 3000,
 }
