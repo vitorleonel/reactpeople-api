@@ -15,19 +15,25 @@ module.exports = {
       if(!githubUser)
         return res.status(422).json({ message: 'Invalid token!' });
 
-      const user = await User.findOneAndUpdate({
-        refId: githubUser.id,
-        username: githubUser.login,
-      }, {
-        refId: githubUser.id,
-        name: githubUser.name,
-        username: githubUser.login,
-        email: githubUser.email,
-        photo: githubUser.avatar_url,
-      }, { new: true, upsert: true });
+      let user = await User.findOne({ refId: githubUser.id });
+
+      if(!user)
+        user = await User.create({
+          refId: githubUser.id,
+          name: githubUser.name,
+          username: githubUser.login,
+          email: githubUser.email,
+          photo: githubUser.avatar_url,
+        });
 
       res.json({
         access_token: User.generateToken(user),
+        user: {
+          name: user.name,
+          username: user.username,
+          email: user.email,
+          photo: user.photo,
+        },
       });
     } catch (error) {
       next(error);
