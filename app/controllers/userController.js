@@ -12,5 +12,37 @@ module.exports = {
     } catch (error) {
       next(error);
     }
-  }
+  },
+
+  async show(req, res, next) {
+    try {
+      const user = await User.findById(req.params.id)
+        .select('name username email photo');
+
+      if(!user)
+        return res.status(404).json({ message: 'User not found.' });
+
+      res.json({
+        user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async update(req, res, next) {
+    try {
+      const user = await User.findById(req.params.id)
+        .select('name username email photo');
+
+      if(!user)
+        return res.status(404).json({ message: 'User not found.' });
+
+      res.json({
+        user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
