@@ -4,6 +4,7 @@ const routes = express.Router();
 const controllers =  require('../controllers');
 
 routes.post('/auth', controllers.authController.auth);
+routes.get('/users', controllers.userController.index);
 
 routes.use((req, res) => {
   res.json({ message: 'API in operation.', });
