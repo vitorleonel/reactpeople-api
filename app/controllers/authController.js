@@ -33,6 +33,7 @@ module.exports = {
           username: user.username,
           email: user.email,
           photo: user.photo,
+          location: user.location,
         },
       });
     } catch (error) {
