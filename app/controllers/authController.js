@@ -29,6 +29,7 @@ module.exports = {
       res.json({
         access_token: User.generateToken(user),
         user: {
+          _id: user._id,
           name: user.name,
           username: user.username,
           email: user.email,
