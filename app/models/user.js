@@ -23,6 +23,16 @@ const UserSchema = new mongoose.Schema({
   photo: {
     type: String,
   },
+  location: {
+    type: {
+      type: String,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      index: '2dsphere',
+    },
+  },
 }, {
   timestamps: true,
 });

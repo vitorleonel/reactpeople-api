@@ -4,7 +4,9 @@ const User = mongoose.model('User');
 module.exports = {
   async index(req, res, next) {
     try {
-      const users = await User.find({}, 'name photo');
+      const users = await User.find({
+        location: { $ne: null },
+      }, 'name photo location');
 
       res.json({
         users,
@@ -17,7 +19,7 @@ module.exports = {
   async show(req, res, next) {
     try {
       const user = await User.findById(req.params.id)
-        .select('name photo');
+        .select('name photo location');
 
       if(!user)
         return res.status(404).json({ message: 'User not found.' });
@@ -30,17 +32,23 @@ module.exports = {
     }
   },
 
-  async update(req, res, next) {
+  async updateLocation(req, res, next) {
     try {
-      const user = await User.findById(req.params.id)
-        .select('name photo');
+      const user = await User.findById(req.params.id);
 
       if(!user)
         return res.status(404).json({ message: 'User not found.' });
 
-      res.json({
-        user,
+      user.set({
+        location: {
+          type: 'Point',
+          coordinates: [req.body.lng, req.body.lat],
+        },
       });
+
+      await user.save();
+
+      res.status(204).json({});
     } catch (error) {
       next(error);
     }
