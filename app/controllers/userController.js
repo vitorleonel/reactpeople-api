@@ -5,7 +5,7 @@ module.exports = {
   async index(req, res, next) {
     try {
       const users = await User.find({
-        location: { $ne: null },
+        'location.coordinates': { $ne: null },
       }, 'name photo location');
 
       res.json({
