@@ -34,9 +34,12 @@ module.exports = {
 
   async updateLocation(req, res, next) {
     try {
+      if(!req.body.lng || !req.body.lat)
+        return res.status(400).json({ message: 'No longitude and latitude provided.' });
+
       const user = await User.findById(req.params.id);
 
-      if(!user)
+      if(!user || user.refId !== req.refId)
         return res.status(404).json({ message: 'User not found.' });
 
       user.set({
