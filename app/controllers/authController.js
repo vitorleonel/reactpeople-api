@@ -20,7 +20,7 @@ module.exports = {
       if(!user)
         user = await User.create({
           refId: githubUser.id,
-          name: githubUser.name,
+          name: githubUser.name || githubUser.login,
           username: githubUser.login,
           email: githubUser.email,
           photo: githubUser.avatar_url,
