@@ -6,7 +6,7 @@ module.exports = {
     try {
       const users = await User.find({
         'location.coordinates': { $ne: null },
-      }, 'name photo location');
+      }, 'name username photo location');
 
       res.json({
         users,
@@ -19,7 +19,7 @@ module.exports = {
   async show(req, res, next) {
     try {
       const user = await User.findById(req.params.id)
-        .select('name photo location');
+        .select('name username photo location');
 
       if(!user)
         return res.status(404).json({ message: 'User not found.' });
