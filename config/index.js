@@ -1,7 +1,7 @@
-const app = require('./app');
-const database = require('./database');
+const app = require("./app");
+const database = require("./database");
 
 module.exports = {
   app,
-  database,
-}
+  database
+};

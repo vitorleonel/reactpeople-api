@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require("path");
 
 const host = process.env.DB_HOST;
 const database = process.env.DB_DATABASE;
@@ -10,5 +10,5 @@ module.exports = {
     ? `mongodb://${username}:${password}@${host}/${database}`
     : `mongodb://${host}/${database}`,
 
-  modelsPath: path.resolve('app', 'models'),
-}
+  modelsPath: path.resolve("app", "models")
+};

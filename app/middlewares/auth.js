@@ -1,24 +1,24 @@
-const jwt = require('jsonwebtoken');
-const appConfig = require('../../config/app');
-const { promisify } = require('util');
+const jwt = require("jsonwebtoken");
+const appConfig = require("../../config/app");
+const { promisify } = require("util");
 
 module.exports = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).send({ message: 'No token provided.' });
+    return res.status(401).send({ message: "No token provided." });
   }
 
-  const parts = authHeader.split(' ');
+  const parts = authHeader.split(" ");
 
   if (!parts.length === 2) {
-    return res.status(401).send({ message: 'Token error.' });
+    return res.status(401).send({ message: "Token error." });
   }
 
   const [scheme, token] = parts;
 
   if (!/^Bearer$/i.test(scheme)) {
-    return res.status(401).send({ message: 'Token malformatted.' });
+    return res.status(401).send({ message: "Token malformatted." });
   }
 
   try {
@@ -28,6 +28,6 @@ module.exports = async (req, res, next) => {
 
     return next();
   } catch (err) {
-    return res.status(401).send({ message: 'Token invalid.' });
+    return res.status(401).send({ message: "Token invalid." });
   }
 };

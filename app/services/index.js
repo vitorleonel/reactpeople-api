@@ -1,5 +1,5 @@
-const github = require('./github');
+const github = require("./github");
 
 module.exports = {
-  github,
-}
+  github
+};
