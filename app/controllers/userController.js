@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
 module.exports = {
-  async index(req, res, next) {
+  async index(req, res) {
     let users = [];
 
     try {
@@ -24,7 +24,7 @@ module.exports = {
     }
   },
 
-  async show(req, res, next) {
+  async show(req, res) {
     try {
       const user = await User.findById(req.params.id).select(
         'name username photo location'
@@ -40,7 +40,7 @@ module.exports = {
     }
   },
 
-  async updateLocation(req, res, next) {
+  async updateLocation(req, res) {
     try {
       if (!req.body.lng || !req.body.lat)
         throw new Error('No longitude and latitude provided.');

@@ -1,19 +1,17 @@
-const mongoose = require("mongoose");
-const User = mongoose.model("User");
-const { github } = require("../services");
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
+const { github } = require('../services');
 
 module.exports = {
-  async auth(req, res, next) {
+  async auth(req, res) {
     try {
       const access_token = await github.getAccessToken(req.body.code);
 
-      if (!access_token)
-        return res.status(422).json({ message: "Invalid authorized code!" });
+      if (!access_token) throw new Error('Invalid authorized code!');
 
       const githubUser = await github.getUser(access_token);
 
-      if (!githubUser)
-        return res.status(422).json({ message: "Invalid token!" });
+      if (!githubUser) throw new Error('Invalid token!');
 
       let user = await User.findOne({ refId: githubUser.id });
       let newUser = false;
@@ -42,8 +40,8 @@ module.exports = {
         },
         new: newUser
       });
-    } catch (error) {
-      next(error);
+    } catch ({ message }) {
+      res.status(422).json({ message });
     }
   }
 };
