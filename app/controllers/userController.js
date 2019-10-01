@@ -1,55 +1,57 @@
-const mongoose = require("mongoose");
-const User = mongoose.model("User");
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
 
 module.exports = {
   async index(req, res, next) {
+    let users = [];
+
     try {
-      const users = await User.find(
+      users = await User.find(
         {
-          "location.coordinates": { $ne: null }
+          'location.coordinates': { $ne: null }
         },
-        "name username photo location"
+        'name username photo location'
       );
 
       res.json({
         users
       });
     } catch (error) {
-      next(error);
+    } finally {
+      res.json({
+        users
+      });
     }
   },
 
   async show(req, res, next) {
     try {
       const user = await User.findById(req.params.id).select(
-        "name username photo location"
+        'name username photo location'
       );
 
-      if (!user) return res.status(404).json({ message: "User not found." });
+      if (!user) throw new Error('User not found.');
 
       res.json({
         user
       });
-    } catch (error) {
-      next(error);
+    } catch ({ message }) {
+      res.status(404).json({ message });
     }
   },
 
   async updateLocation(req, res, next) {
     try {
       if (!req.body.lng || !req.body.lat)
-        return res
-          .status(400)
-          .json({ message: "No longitude and latitude provided." });
+        throw new Error('No longitude and latitude provided.');
 
       const user = await User.findById(req.params.id);
 
-      if (!user || user.refId !== req.refId)
-        return res.status(404).json({ message: "User not found." });
+      if (!user || user.refId !== req.refId) throw new Error('User not found.');
 
       user.set({
         location: {
-          type: "Point",
+          type: 'Point',
           coordinates: [req.body.lng, req.body.lat]
         }
       });
@@ -57,8 +59,8 @@ module.exports = {
       await user.save();
 
       res.status(204).json({});
-    } catch (error) {
-      next(error);
+    } catch ({ message }) {
+      res.status(400).json({ message });
     }
   }
 };
